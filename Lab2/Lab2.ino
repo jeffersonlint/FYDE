@@ -4,7 +4,7 @@
 
 // Set the number to whichever part you're currently useing
 // i.e. for part two "STEP_NUMBER 2"
-#define STEP_NUMBER 1
+#define STEP_NUMBER 2
 
 bool check_failure(int);
 int psuedo_random(void);
@@ -25,8 +25,10 @@ void sensor_init(void)
 {
   if(check_failure(3))
   {
-    //your code here
-
+    digitalWrite(13, HIGH);
+    delay(500);
+    digitalWrite(13, LOW);
+    delay(1000);
     failure();
   }
 }
@@ -35,7 +37,13 @@ void actuator_init(void)
 {
   if(check_failure(5))
   {
-    //your code here
+    for(int i=0; i<2; i++){
+      digitalWrite(13, HIGH);
+      delay(500);
+      digitalWrite(13, LOW);
+      delay(500);
+    }
+    delay(1000);
 
     failure();
   }
@@ -45,7 +53,13 @@ void wifi_init(void)
 {
   if(check_failure(7))
   {
-    //your code here
+    for(int i=0; i<3; i++){
+      digitalWrite(13, HIGH);
+      delay(500);
+      digitalWrite(13, LOW);
+      delay(500);
+    }
+    delay(1000);
 
     failure();
   }
@@ -53,12 +67,14 @@ void wifi_init(void)
 
 void setup(void)
 {
+  pinMode(13, OUTPUT);
   sensor_init();
   actuator_init();
   wifi_init(); 
 }
 
 void loop(void){
+  Serial.print("success");
   success();  
 }
 
@@ -82,7 +98,7 @@ void loop(void)
       if(check_failure(i))
       {
         //insert your code here
-
+        Serial.println(i);
         failure();
       }
     }
@@ -145,7 +161,7 @@ void failure(void)
 
 bool check_failure(int num)
 {
-  if(!(psuedo_random() % num))
+  if((psuedo_random() % num))
   {
     return true;
   }
